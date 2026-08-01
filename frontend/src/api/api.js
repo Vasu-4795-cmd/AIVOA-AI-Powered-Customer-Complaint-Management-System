@@ -23,18 +23,25 @@
 
 import axios from "axios";
 
-// Render backend URL
 const API_BASE =
   import.meta.env.VITE_API_BASE ||
   "https://aivoa-ai-powered-customer-complaint.onrender.com";
 
-// Axios instance
 export const api = axios.create({
   baseURL: API_BASE,
   headers: {
     Accept: "application/json",
   },
 });
+
+// ==============================
+// Health
+// ==============================
+
+export const healthCheck = async () => {
+  const response = await api.get("/api/health");
+  return response.data;
+};
 
 // ==============================
 // Complaints
@@ -61,7 +68,7 @@ export const updateComplaint = async (id, payload) => {
 };
 
 // ==============================
-// AI - Extract complaint from file
+// AI - Extract
 // ==============================
 
 export const extractFromFile = async (file) => {
@@ -75,7 +82,7 @@ export const extractFromFile = async (file) => {
 };
 
 // ==============================
-// AI - Analyze complaint
+// AI - Analyze
 // ==============================
 
 export const analyzeComplaint = async (complaintId) => {
@@ -87,20 +94,37 @@ export const analyzeComplaint = async (complaintId) => {
 };
 
 // ==============================
-// AI Copilot - Parse complaint
+// AI Copilot - Parse
 // ==============================
 
-export const parseCopilotComplaint = async (payload) => {
-  const response = await api.post("/api/copilot/parse", payload);
+export const parseCopilotComplaint = async (text = null, file = null) => {
+  const formData = new FormData();
+
+  if (text && text.trim()) {
+    formData.append("text", text);
+  }
+
+  if (file) {
+    formData.append("file", file);
+  }
+
+  const response = await api.post(
+    "/api/copilot/parse",
+    formData
+  );
 
   return response.data;
 };
 
 // ==============================
-// Health Check
+// AI Copilot - Chat Correction
 // ==============================
 
-export const healthCheck = async () => {
-  const response = await api.get("/");
+export const copilotChat = async (message, currentFields) => {
+  const response = await api.post("/api/copilot/chat", {
+    message,
+    current_fields: currentFields,
+  });
+
   return response.data;
 };
