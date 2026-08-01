@@ -1,0 +1,13 @@
+From: qa.desk@apollopharmacy.example
+To: complaints@aivoa.ai
+Subject: Complaint - Discolored Capsules
+
+Hi Team,
+
+Apollo Pharmacy reported discolored capsules in Amoxicillin Capsules 500 mg.
+Batch number AMX240602. Manufacturing date March 2026. Expiry date February 2028.
+Affected quantity: 12 capsules found in a sealed bottle at the retail counter.
+Please log this complaint and advise on next steps.
+
+Regards,
+Apollo Pharmacy QA Desk
